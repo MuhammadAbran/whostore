@@ -7,7 +7,7 @@
  */
 
 import React, {Component} from 'react';
-import {Image, View} from 'react-native';
+import {Image, View, ScrollView} from 'react-native';
 import {
    Container,
    Content,
@@ -33,6 +33,7 @@ export default class App extends Component {
                   <Title>Who Store?</Title>
             </Body>
          </Header>
+         <ScrollView>
             <View style={{ flexDirection: 'row', flex: 1, paddingHorizontal: 5 }}>
                <View style={{ flex: 1 }}>
                <Card>
@@ -57,6 +58,55 @@ export default class App extends Component {
                </Card>
                </View>
             </View>
+            <View style={{ flexDirection: 'row', flex: 1, paddingHorizontal: 5 }}>
+               <View style={{ flex: 1 }}>
+               <Card>
+                  <CardItem cardBody>
+                     <Image source={require('./assets/images/icon.png')} style={{ width:170, height: 170 }}/>
+                  </CardItem>
+
+                  <CardItem>
+                        <Text><Text style={{ fontWeight: 'bold' }}>Mantan Bekas</Text>{"\n"}Rp. 1000</Text>
+                  </CardItem>
+               </Card>
+               </View>
+
+               <View style={{ flex: 1 }}>
+               <Card>
+                  <CardItem cardBody>
+                     <Image source={require('./assets/images/icon.png')} style={{ width:170, height: 170 }}/>
+                  </CardItem>
+                  <CardItem>
+                        <Text><Text style={{ fontWeight: 'bold' }}>Mantan Bekas</Text>{"\n"}Rp. 1000</Text>
+                  </CardItem>
+               </Card>
+               </View>
+            </View>
+            <View style={{ flexDirection: 'row', flex: 1, paddingHorizontal: 5 }}>
+               <View style={{ flex: 1 }}>
+               <Card>
+                  <CardItem cardBody>
+                     <Image source={require('./assets/images/icon.png')} style={{ width:170, height: 170 }}/>
+                  </CardItem>
+
+                  <CardItem>
+                        <Text><Text style={{ fontWeight: 'bold' }}>Mantan Bekas</Text>{"\n"}Rp. 1000</Text>
+                  </CardItem>
+               </Card>
+               </View>
+
+               <View style={{ flex: 1 }}>
+               <Card>
+                  <CardItem cardBody>
+                     <Image source={require('./assets/images/icon.png')} style={{ width:170, height: 170 }}/>
+                  </CardItem>
+                  <CardItem>
+                        <Text><Text style={{ fontWeight: 'bold' }}>Mantan Bekas</Text>{"\n"}Rp. 1000</Text>
+                  </CardItem>
+               </Card>
+               </View>
+            </View>
+          </ScrollView>
       </Container>
     );
   }
