@@ -20,6 +20,10 @@ import {
    Icon
    } from 'native-base';
 
+// componentDidMount(){
+//    this.timer = setInterval()
+// }
+
 export default class App extends Component {
   render() {
     return (
@@ -30,10 +34,10 @@ export default class App extends Component {
             </Body>
          </Header>
             <View style={{ flexDirection: 'row', flex: 1, paddingHorizontal: 5 }}>
-               <View style={{ flex: 2 }}>
+               <View style={{ flex: 1 }}>
                <Card>
                   <CardItem cardBody>
-                     <Image source={require('./assets/images/icon.png')} style={{ width:150, height: 150 }}/>
+                     <Image source={require('./assets/images/icon.png')} style={{ width:170, height: 170 }}/>
                   </CardItem>
 
                   <CardItem>
@@ -42,10 +46,10 @@ export default class App extends Component {
                </Card>
                </View>
 
-               <View style={{ flex: 2 }}>
+               <View style={{ flex: 1 }}>
                <Card>
                   <CardItem cardBody>
-                     <Image source={require('./assets/images/icon.png')} style={{ width:150, height: 150 }}/>
+                     <Image source={require('./assets/images/icon.png')} style={{ width:170, height: 170 }}/>
                   </CardItem>
                   <CardItem>
                         <Text><Text style={{ fontWeight: 'bold' }}>Mantan Bekas</Text>{"\n"}Rp. 1000</Text>
