@@ -7,7 +7,7 @@
  */
 
 import React, {Component} from 'react';
-import {Image, View, ScrollView} from 'react-native';
+import {Image, View, ScrollView, FlatList, Alert, TouchableNativeFeedback} from 'react-native';
 import {
    Container,
    Content,
@@ -20,94 +20,89 @@ import {
    Icon
    } from 'native-base';
 
-// componentDidMount(){
-//    this.timer = setInterval()
-// }
+import ProductDetail from './assets/screen/ProductDetail';
+
+import { createStackNavigator, createAppContainer } from 'react-navigation';
+
+const color = '#3498db';
+const numColumns = 2;
 
 export default class App extends Component {
-  render() {
-    return (
-      <Container>
-         <Header style={{ align: 'center' }}>
-            <Body>
-                  <Title>Who Store?</Title>
-            </Body>
-         </Header>
-         <ScrollView>
-            <View style={{ flexDirection: 'row', flex: 1, paddingHorizontal: 5 }}>
-               <View style={{ flex: 1 }}>
-               <Card>
-                  <CardItem cardBody>
-                     <Image source={require('./assets/images/icon.png')} style={{ width:170, height: 170 }}/>
-                  </CardItem>
-
-                  <CardItem>
-                        <Text><Text style={{ fontWeight: 'bold' }}>Mantan Bekas</Text>{"\n"}Rp. 1000</Text>
-                  </CardItem>
-               </Card>
-               </View>
-
-               <View style={{ flex: 1 }}>
-               <Card>
-                  <CardItem cardBody>
-                     <Image source={require('./assets/images/icon.png')} style={{ width:170, height: 170 }}/>
-                  </CardItem>
-                  <CardItem>
-                        <Text><Text style={{ fontWeight: 'bold' }}>Mantan Bekas</Text>{"\n"}Rp. 1000</Text>
-                  </CardItem>
-               </Card>
-               </View>
-            </View>
-            <View style={{ flexDirection: 'row', flex: 1, paddingHorizontal: 5 }}>
-               <View style={{ flex: 1 }}>
-               <Card>
-                  <CardItem cardBody>
-                     <Image source={require('./assets/images/icon.png')} style={{ width:170, height: 170 }}/>
-                  </CardItem>
-
-                  <CardItem>
-                        <Text><Text style={{ fontWeight: 'bold' }}>Mantan Bekas</Text>{"\n"}Rp. 1000</Text>
-                  </CardItem>
-               </Card>
-               </View>
-
-               <View style={{ flex: 1 }}>
-               <Card>
-                  <CardItem cardBody>
-                     <Image source={require('./assets/images/icon.png')} style={{ width:170, height: 170 }}/>
-                  </CardItem>
-                  <CardItem>
-                        <Text><Text style={{ fontWeight: 'bold' }}>Mantan Bekas</Text>{"\n"}Rp. 1000</Text>
-                  </CardItem>
-               </Card>
-               </View>
-            </View>
-            <View style={{ flexDirection: 'row', flex: 1, paddingHorizontal: 5 }}>
-               <View style={{ flex: 1 }}>
-               <Card>
-                  <CardItem cardBody>
-                     <Image source={require('./assets/images/icon.png')} style={{ width:170, height: 170 }}/>
-                  </CardItem>
-
-                  <CardItem>
-                        <Text><Text style={{ fontWeight: 'bold' }}>Mantan Bekas</Text>{"\n"}Rp. 1000</Text>
-                  </CardItem>
-               </Card>
-               </View>
-
-               <View style={{ flex: 1 }}>
-               <Card>
-                  <CardItem cardBody>
-                     <Image source={require('./assets/images/icon.png')} style={{ width:170, height: 170 }}/>
-                  </CardItem>
-                  <CardItem>
-                        <Text><Text style={{ fontWeight: 'bold' }}>Mantan Bekas</Text>{"\n"}Rp. 1000</Text>
-                  </CardItem>
-               </Card>
-               </View>
-            </View>
-          </ScrollView>
-      </Container>
-    );
-  }
+   render() {
+      return <AppContainer/>;
+   }
 }
+
+class Home extends Component {
+   constructor(props){
+      super(props);
+      this.state ={
+         data:[]
+      }
+   }
+
+   fetchData = async()=> {
+      const response = await fetch('http://sppd.dayatfadila.com/public/wootest');
+      const post = await response.json();
+      this.setState({data: post});
+   }
+
+   componentDidMount(){
+      this.fetchData();
+   }
+
+   static navigationOptions = {
+       title: 'Who Store?',
+       headerStyle: {
+         backgroundColor: color
+       },
+       headerTintColor: '#fff',
+     };
+
+   renderItem = ({ item, index }) => {
+      return (
+         <Card>
+            <CardItem cardBody>
+               <TouchableNativeFeedback
+                  onPress={() => this.props.navigation.navigate('ProductDetail')}>
+                  <Image
+                     source={{ uri: item.images[0].src }}
+                     style={{ width:170, height: 170 }}
+                     />
+                </TouchableNativeFeedback>
+            </CardItem>
+
+            <CardItem>
+                  <Text><Text style={{ fontWeight: 'bold' }}>{ item.name } </Text>{"\n"}Rp. { item.price }.000</Text>
+            </CardItem>
+         </Card>
+         );
+   }
+
+
+ render() {
+   return (
+      <Container>
+         <ScrollView>
+            <FlatList
+               data={this.state.data}
+               renderItem={this.renderItem}
+               numColumns={numColumns}
+               keyExtractor={(item, index) => item.key}
+            />
+         </ScrollView>
+      </Container>
+   );
+ }
+}
+
+const AppNovigator = createStackNavigator({
+   Home:{
+      screen: Home
+   },
+   ProductDetail:{
+      screen: ProductDetail
+   }
+});
+
+const AppContainer = createAppContainer(AppNovigator);
