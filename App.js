@@ -64,7 +64,7 @@ class Home extends Component {
          <Card>
             <CardItem cardBody>
                <TouchableNativeFeedback
-                  onPress={() => this.props.navigation.navigate('ProductDetail')}>
+                  onPress={() => this.props.navigation.navigate('ProductDetail',{id: item.id})}>
                   <Image
                      source={{ uri: item.images[0].src }}
                      style={{ width:170, height: 170 }}

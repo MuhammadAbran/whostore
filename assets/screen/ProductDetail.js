@@ -23,22 +23,57 @@ export default class ProductDetail extends Component {
   super(props);
   this.state ={
    data:[],
-   image: []
+   picture: []
  }
 }
 
 fetchData = async()=> {
-  const response = await fetch('http://sppd.dayatfadila.com/public/wootest/65');
+  const id = this.props.navigation.state.params.id;
+  console.log(id);
+
+  const response = await fetch('http://sppd.dayatfadila.com/public/wootest/'+id);
   const post = await response.json();
       this.setState({
          data: post
       });
 
-      const images = JSON.stringify(this.state.data.images);
+      // const images = JSON.stringify(this.state.data.images);
+      const images = [
+    {
+        title: 'Beautiful and dramatic Antelope Canyon',
+        subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
+        illustration: 'https://i.imgur.com/UYiroysl.jpg'
+    },
+    {
+        title: 'Earlier this morning, NYC',
+        subtitle: 'Lorem ipsum dolor sit amet',
+        illustration: 'https://i.imgur.com/UPrs1EWl.jpg'
+    },
+    {
+        title: 'White Pocket Sunset',
+        subtitle: 'Lorem ipsum dolor sit amet et nuncat ',
+        illustration: 'https://i.imgur.com/MABUbpDl.jpg'
+    },
+    {
+        title: 'Acrocorinth, Greece',
+        subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
+        illustration: 'https://i.imgur.com/KZsmUi2l.jpg'
+    },
+    {
+        title: 'The lone tree, majestic landscape of New Zealand',
+        subtitle: 'Lorem ipsum dolor sit amet',
+        illustration: 'https://i.imgur.com/2nCt3Sbl.jpg'
+    },
+    {
+        title: 'Middle Earth, Germany',
+        subtitle: 'Lorem ipsum dolor sit amet',
+        illustration: 'https://i.imgur.com/lceHsT6l.jpg'
+    }
+];
       this.setState({
-         image: images
+         picture: images
       });
-      console.log(this.state.image);
+      console.log(this.state.data);
     }
 
     componentDidMount(){
@@ -55,23 +90,18 @@ fetchData = async()=> {
 
    _renderItem = (item, index) => {
      return (
-       <Image
-         source={{ uri: item.src }}
-       />
+      <View>
+                <Text>{ item.title }</Text>
+            </View>
      );
   }
 
    render() {
     return (
        <Content>
-          <Carousel
-            ref={(c)=> { this._carousel = c; }}
-            data={ this.state.image }
-            renderItem={ this._renderItem }
-            sliderWidth={ 150 }
-            itemWidth={ 100 }
-          />
-         <Text>{this.state.data.name}</Text>
+       <ScrollView>
+          <Text>{this.state.data.name}</Text>
+          </ScrollView>
        </Content>
 
       );
