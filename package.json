@@ -12,6 +12,7 @@
     "react-base": "^0.2.0",
     "react-native": "0.57.8",
     "react-native-gesture-handler": "^1.0.15",
+    "react-native-snap-carousel": "^3.7.5",
     "react-navigation": "^3.0.9"
   },
   "devDependencies": {

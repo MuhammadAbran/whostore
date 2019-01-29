@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Image, View, ScrollView, FlatList, Alert, TouchableNativeFeedback} from 'react-native';
+import Carousel from 'react-native-snap-carousel';
 import {
  Container,
  Content,
@@ -21,14 +22,23 @@ export default class ProductDetail extends Component {
  constructor(props){
   super(props);
   this.state ={
-   data:[]
+   data:[],
+   image: []
  }
 }
 
 fetchData = async()=> {
   const response = await fetch('http://sppd.dayatfadila.com/public/wootest/65');
   const post = await response.json();
-      this.setState({data: post});
+      this.setState({
+         data: post
+      });
+
+      const images = JSON.stringify(this.state.data.images);
+      this.setState({
+         image: images
+      });
+      console.log(this.state.image);
     }
 
     componentDidMount(){
@@ -43,12 +53,27 @@ fetchData = async()=> {
      headerTintColor: '#fff',
    };
 
+   _renderItem = (item, index) => {
+     return (
+       <Image
+         source={{ uri: item.src }}
+       />
+     );
+  }
+
    render() {
     return (
-    <Content>
-      <Text>{this.state.data.name}</Text>
-      </Content>
-      
+       <Content>
+          <Carousel
+            ref={(c)=> { this._carousel = c; }}
+            data={ this.state.image }
+            renderItem={ this._renderItem }
+            sliderWidth={ 150 }
+            itemWidth={ 100 }
+          />
+         <Text>{this.state.data.name}</Text>
+       </Content>
+
       );
   }
 }
