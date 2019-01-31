@@ -1,6 +1,13 @@
 import React, {Component} from 'react';
-import {Image, View, ScrollView, FlatList, Alert, TouchableNativeFeedback, TouchableOpacity, Button} from 'react-native';
+import { Button } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import {Image, View, ScrollView, FlatList, Alert, Picker, TouchableNativeFeedback, TouchableOpacity} from 'react-native';
 import Carousel from 'react-native-snap-carousel';
+import Dropdown, {
+   Select,
+   Option,
+   OptionList,
+} from 'react-native-selectme';
 import {
  Container,
  Content,
@@ -9,8 +16,7 @@ import {
  CardItem,
  Body,
  Title,
- Text, Thumbnail,
- Icon
+ Text, Thumbnail
 } from 'native-base';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 
@@ -23,7 +29,8 @@ export default class ProductDetail extends Component {
   super(props);
   this.state ={
    data:[],
-   picture: []
+   picture: [],
+   cart: []
  }
 }
 
@@ -46,6 +53,25 @@ fetchData = async()=> {
     componentDidMount(){
       this.fetchData();
     }
+
+    addToCart = () => {
+      fetch('http://sppd.dayatfadila.com/shop/wp-json/wc/v2/cart', {
+         method: 'POST',
+         headers:{
+            Accept: 'aplication/json',
+            'Content-Type': 'aplication/json'
+         },
+         body: JSON.stringify({
+            "cart": this.state.cart
+         }),
+      })
+      .then( response => response.json())
+      .then((responseJson) => {
+         "Post Response",
+         "Response Body -> " + JSON.stringify(responseJson)
+      })
+      .done();
+   }
 
     static navigationOptions = {
      title: 'Who Store?',
@@ -77,16 +103,33 @@ fetchData = async()=> {
           <Content style={{ marginHorizontal: 12, marginTop: -25}}>
              <Card>
                <CardItem header>
-                   <Text style={{ fontSize: 20 }}>{this.state.data.name}</Text>
+                   <Text style={{ fontSize: 25 }}>{this.state.data.name}<Text style={{ fontSize: 30, color: color, marginTop: 10  }}>{"\n"}Rp. {this.state.data.price}.000</Text></Text>
                </CardItem>
                <CardItem cardBody>
                    <Text style={{ marginHorizontal: 10 }}>{this.state.data.description}</Text>
                </CardItem>
              </Card>
-             <Button
-                 onPress={ Alert.alert("yuhu~") }
-                 title="Add To Cart"
-               />
+             <Body>
+                <Left>
+                   <Button
+                       onPress={ this.addToCart }
+                       icon={
+                         <Icon
+                          name="cart-plus"
+                          size={15}
+                          color="white"
+                         />
+                       }
+                       buttonStyle={{ width: 120 }}
+                       title=" Add To Cart"
+                     />
+                </Left>
+                <Right>
+                  <Select>
+
+                  </Select>
+                </Right>
+             </Body>
           </Content>
 
        </Content>
